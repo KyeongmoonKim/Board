@@ -10,7 +10,13 @@ public class AppointmentVO {
 	private Timestamp endDate;
 	private String userId;
 	
-	public AppointmentVO() {		
+	public AppointmentVO() {
+		this.id = -1;
+		this.title = null;
+		this.explanation = null;
+		this.startDate = null;
+		this.endDate = null;
+		this.userId = null;
 	}
 	public void setId(int a) {
 		this.id = a;
