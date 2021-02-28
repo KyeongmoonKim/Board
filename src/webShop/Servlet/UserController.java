@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
 
 /**
  * Servlet implementation class UserController
@@ -27,7 +28,7 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doHandle(request, response);
 	}
 
 	/**
@@ -35,7 +36,29 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		doHandle(request, response);
+	}
+	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		String action = request.getPathInfo();
+		String nextPage = "";
+		
+		//login case
+		if(action.compareTo("/user/login")==0) {
+			String id = request.getParameter("user_id");
+			String pwd = request.getParameter("user_pw");
+			System.out.println(action);
+			System.out.println(id);
+			System.out.println(pwd);
+			nextPage = nextPage + "/user/todayView";
+		}
+		
+		
+		
+		
+		
+		RequestDispatcher dis = request.getRequestDispatcher(nextPage);
+		dis.forward(request, response);
 	}
 
 }
