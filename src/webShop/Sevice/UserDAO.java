@@ -16,7 +16,7 @@ public class UserDAO {
 		try {
 		 Context ctx = new InitialContext(); //Set an Initial path for JNDI
 		 Context envContext = (Context)ctx.lookup("java:/comp/env");
-		 dataFactory = (DataSource)envContext.lookup("jdcb/oracle");
+		 dataFactory = (DataSource)envContext.lookup("jdbc/oracle");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -34,7 +34,12 @@ public class UserDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.getInt("cnt")==1) ret = true;
+			while(rs.next()) {
+				if(rs.getInt("cnt")==1) ret = true;
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

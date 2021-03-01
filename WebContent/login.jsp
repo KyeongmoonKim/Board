@@ -1,3 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%	String isLogin = (String)session.getAttribute("isLogin");
+	System.out.println("isLogin is ");
+	if(isLogin!=null) System.out.println(isLogin);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +20,19 @@ function fn_validate(){
 	 alert("아이디와 비밀번호는 필수입니다.");
     }else{
 	frmLogin.method="post";
-	frmLogin.action="/user/login";
+	frmLogin.action="/webShop/user/login"; //directory 경로
 	frmLogin.submit();
     }
  }
+ function ol_alert() {
+	 <%if(isLogin!=null&&isLogin.compareTo("false")==0) {
+	 %>
+	 alert("회원정보가 일치하지 않습니다!");
+	 <%
+	 }
+	 %>
+ }
+ window.onload=ol_alert();
 </script>
 </head>
 <body>

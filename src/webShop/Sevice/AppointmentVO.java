@@ -6,8 +6,8 @@ public class AppointmentVO {
 	private int id;
 	private String title;
 	private String explanation;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private String startDate;
+	private String endDate;
 	private String userId;
 	
 	public AppointmentVO() {
@@ -36,22 +36,16 @@ public class AppointmentVO {
 	public String getExplanation() {
 		return this.explanation;
 	}
-	public void setStartDate(Timestamp a) {
+	public void setStartDate(String a) {
 		this.startDate = a;
 	}
-	public void setStartDate(long a) {
-		this.startDate = new Timestamp(a);		
-	}
-	public Timestamp getStartDate() {
+	public String getStartDate() {
 		return this.startDate;
 	}
-	public void setEndDate(Timestamp a) {
+	public void setEndDate(String a) {
 		this.endDate = a;
 	}
-	public void setEndDate(long a) {
-		this.endDate = new Timestamp(a);
-	}
-	public Timestamp getEndDate() {
+	public String getEndDate() {
 		return this.endDate;
 	}
 	public void setUserId(String a) {
@@ -68,8 +62,11 @@ public class AppointmentVO {
  ID INT PRIMARY KEY(AUTO INCREMENT),
  TITLE VARCHAR(40) NOT NULL,
  EXPLANATION VARCHAR(255),
- STARTDATE TIMESTAMP NOT NULL,
- ENDDATE TIMESTAMP NOT NULL,
+ STARTDATE CHAR(16) NOT NULL, "YYYY-MM-DD-HH-mm" 16자리
+ ENDDATE CHAR(16) NOT NULL,
  ISDELETED INT,(기본0 삭제시 1)
- USERID VARCHAR(20) FOREIGN KEY REFERENCES USER(USERID)
+ USERID VARCHAR(20),
+ CONSTRAINT FK_ID FOREIGN KEY(USERID) REFERENCES MYUSER(USERID);
+ 
+ 넣을 때, INSERT INTO MYAPPOINTMENT VALUES(EMP_SEQ.NEXTVAL, ...);
 */
