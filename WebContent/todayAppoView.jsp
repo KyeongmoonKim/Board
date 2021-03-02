@@ -4,7 +4,6 @@
 <%
 	ArrayList<AppointmentVO> AppoList = (ArrayList<AppointmentVO>)request.getAttribute("AppoList");
 	System.out.println(AppoList.size());
-	AppointmentVO temp = AppoList.get(0);
 %>
 <!DOCTYPE html>
 <html>
@@ -14,10 +13,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<% for(int i =0; i < AppoList.size(); i++) {%>
+<% AppointmentVO temp = AppoList.get(i); %>
 id = <%=temp.getId()%><br>
 title = <%=temp.getTitle()%><br>
 startdate = <%=temp.getStartDate()%><br>
 enddate = <%=temp.getEndDate() %><br>
 userid = <%=temp.getUserId() %>
+<% } %>
 </body>
 </html>

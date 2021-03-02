@@ -58,7 +58,7 @@ public class UserController extends HttpServlet {
 			}
 			else*/
 			if(action.compareTo("/webShop/user/login")==0) { //로그인 요청
-				String id = request.getParameter("user_id");
+				String id = request.getParameter("user_id"); //post 방식
 				String pwd = request.getParameter("user_pw");
 				UserVO uvo = new UserVO();
 				uvo.setId(id);
@@ -76,9 +76,11 @@ public class UserController extends HttpServlet {
 					// format에 맞게 출력하기 위한 문자열 변환
 					String dTime = formatter.format(systemTime);
 					System.out.println(dTime);
-					request.setAttribute("date", dTime);
+					/*request.setAttribute("date", dTime);
 					nextPage = nextPage + "/user/todayAppo"; //dispatch는 이렇게(시작이  /webshop에서 시작임)
-					forwardCase = 0; //DISPATCH
+					forwardCase = 0; //DISPATCH */ //디스패치
+					nextPage = nextPage + "/webShop/user/todayAppo?date="+dTime;
+					forwardCase = 1;
 				} else {//로그인 실패
 					session.setAttribute("isLogin", "false");
 					nextPage = nextPage + "/webShop/login.jsp"; //redirect는 경로로 (시작이 localhost:8090)임
@@ -86,11 +88,12 @@ public class UserController extends HttpServlet {
 				}
 			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//request의 date의
 				AppointmentDAO Adao = new AppointmentDAO();
-				String date = (String)request.getAttribute("date");
+				String date = request.getParameter("date"); //get 방식
+				System.out.println("hi");
 				System.out.println(date);
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
-				request.setAttribute("AppoList", AppoList);
-				nextPage = nextPage + "/todayAppoView.jsp";
+				request.setAttribute("AppoList", AppoList); 
+				nextPage = nextPage + "/todayAppoView.jsp"; //dispatch(시작 /webShop);
 				forwardCase = 0;
 			}
 			//System.out.println("getRequestURI: " + request.getRequestURI());
