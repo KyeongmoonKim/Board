@@ -86,9 +86,9 @@ public class UserController extends HttpServlet {
 					nextPage = nextPage + "/webShop/login.jsp"; //redirect는 경로로 (시작이 localhost:8090)임
 					forwardCase = 1; //redirect
 				}
-			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//request의 date의
+			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//date(YYYY-MM-DD)의 일정 호출
 				AppointmentDAO Adao = new AppointmentDAO();
-				String date = request.getParameter("date"); //get 방식
+				String date = request.getParameter("date"); //get 방식이면 이렇게
 				String page = request.getParameter("page");
 				System.out.println("hi");
 				System.out.println(date);
@@ -97,6 +97,14 @@ public class UserController extends HttpServlet {
 				request.setAttribute("page", page);
 				nextPage = nextPage + "/todayAppoView.jsp"; //dispatch(시작 /webShop);
 				forwardCase = 0;
+			} else if(action.compareTo("/webShop/user/makeAppo")==0) {//일정 등록
+				String title = (String)request.getAttribute("title");
+				String explanation = (String)request.getAttribute("explanation");
+				String startDate = (String)request.getAttribute("startDate");
+				String endDate = (String)request.getAttribute("endDate");
+				String userId = (String)request.getAttribute("userId");
+				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate+"&page=1";
+				forwardCase = 1;
 			}
 			//System.out.println("getRequestURI: " + request.getRequestURI());
 			//System.out.println("getServletPath: " + request.getServletPath());
