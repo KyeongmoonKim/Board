@@ -3,6 +3,7 @@
     
 <%
 	ArrayList<AppointmentVO> AppoList = (ArrayList<AppointmentVO>)request.getAttribute("AppoList");
+	int pageNum = Integer.parseInt((String)request.getAttribute("page"));
 	System.out.println(AppoList.size());
 %>
 <!DOCTYPE html>
@@ -13,13 +14,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% for(int i =0; i < AppoList.size(); i++) {%>
-<% AppointmentVO temp = AppoList.get(i); %>
-id = <%=temp.getId()%><br>
-title = <%=temp.getTitle()%><br>
-startdate = <%=temp.getStartDate()%><br>
-enddate = <%=temp.getEndDate() %><br>
-userid = <%=temp.getUserId() %>
-<% } %>
+<ul class="lst_type">
+	<li>
+		<span style='margin-left:50px'>아이디</span>
+		<span>제목</span>
+		<span>작성자</span>
+		<span>시작날짜</span>
+		<span>종료날짜</span>
+	</li>
+</ul>
 </body>
 </html>

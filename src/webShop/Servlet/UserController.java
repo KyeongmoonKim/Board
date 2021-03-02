@@ -79,7 +79,7 @@ public class UserController extends HttpServlet {
 					/*request.setAttribute("date", dTime);
 					nextPage = nextPage + "/user/todayAppo"; //dispatch는 이렇게(시작이  /webshop에서 시작임)
 					forwardCase = 0; //DISPATCH */ //디스패치
-					nextPage = nextPage + "/webShop/user/todayAppo?date="+dTime;
+					nextPage = nextPage + "/webShop/user/todayAppo?date="+dTime+"&page=1";
 					forwardCase = 1;
 				} else {//로그인 실패
 					session.setAttribute("isLogin", "false");
@@ -89,10 +89,12 @@ public class UserController extends HttpServlet {
 			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//request의 date의
 				AppointmentDAO Adao = new AppointmentDAO();
 				String date = request.getParameter("date"); //get 방식
+				String page = request.getParameter("page");
 				System.out.println("hi");
 				System.out.println(date);
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
 				request.setAttribute("AppoList", AppoList); 
+				request.setAttribute("page", page);
 				nextPage = nextPage + "/todayAppoView.jsp"; //dispatch(시작 /webShop);
 				forwardCase = 0;
 			}
