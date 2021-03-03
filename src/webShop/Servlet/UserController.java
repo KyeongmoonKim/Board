@@ -117,7 +117,8 @@ public class UserController extends HttpServlet {
 				Avo.setEndDate(endDate);
 				Avo.setExplanation(explanation);
 				Avo.setUserId(userId);
-				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate+"&page=1";
+				Adao.makeAppo(Avo);
+				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate.substring(0,10)+"&page=1";
 				forwardCase = 1;
 			}
 			

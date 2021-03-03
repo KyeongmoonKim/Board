@@ -49,6 +49,15 @@ public class AppointmentDAO {
 	}
 	public void makeAppo(AppointmentVO Avo) {
 		try {
+			con = dataFactory.getConnection();
+			String q = "INSERT INTO MYAPPOINTMENT VALUES (EMP_SEQ.NEXTVAL, ?, ?, ?, ?, 0, ?)";
+			pstmt = con.prepareStatement(q);
+			pstmt.setString(1,  Avo.getTitle()); //제목
+			if(Avo.getExplanation().length()==0) pstmt.setString(2,  "No Explanation"); //내용
+			else pstmt.setString(2,  Avo.getExplanation()); //내용
+			pstmt.setString(3,  Avo.getStartDate()); //시작일
+			pstmt.setString(4,  Avo.getEndDate()); //종료일
+			pstmt.setString(5,  Avo.getUserId());
 			pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
