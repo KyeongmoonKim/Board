@@ -45,7 +45,7 @@
             </h2>
             <div class="ui large form">
                 <div class="ui stacked segment">
-                    <a href="/webShop/makeAppo.jsp"><button class="ui fluid large teal submit button" onClick="fn_validate()">일정 등록하기</button></a>
+                    <a href="/webShop/makeAppo.jsp"><button class="ui fluid large teal submit button">일정 등록하기</button></a>
                     <table class="ui celled table">
                         <thead>
                             <tr>

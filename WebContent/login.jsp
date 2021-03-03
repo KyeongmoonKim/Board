@@ -28,7 +28,6 @@
         }
 
     </style>
-</script>
 </head>
 <body>
     <div class="ui middle aligned center aligned grid">

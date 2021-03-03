@@ -47,6 +47,7 @@ public class UserController extends HttpServlet {
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getRequestURI();
+		System.out.println(action);
 		String nextPage = "";
 		int forwardCase = 0;
 		try {
@@ -59,7 +60,9 @@ public class UserController extends HttpServlet {
 			else*/
 			if(action.compareTo("/webShop/user/login")==0) { //로그인 요청
 				String id = request.getParameter("user_id"); //post 방식
+				System.out.println(id);
 				String pwd = request.getParameter("user_pw");
+				System.out.println(pwd);
 				UserVO uvo = new UserVO();
 				uvo.setId(id);
 				uvo.setPwd(pwd);
@@ -90,22 +93,34 @@ public class UserController extends HttpServlet {
 				AppointmentDAO Adao = new AppointmentDAO();
 				String date = request.getParameter("date"); //get 방식이면 이렇게
 				String page = request.getParameter("page");
-				System.out.println("hi");
-				System.out.println(date);
+				if(date==null) {//없을 땐 현재 날짜.
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+					long systemTime = System.currentTimeMillis();
+					date = formatter.format(systemTime);
+				}
+				if(page==null) page = "1";
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
 				request.setAttribute("AppoList", AppoList); 
 				request.setAttribute("page", page);
 				nextPage = nextPage + "/todayAppoView.jsp"; //dispatch(시작 /webShop);
 				forwardCase = 0;
 			} else if(action.compareTo("/webShop/user/makeAppo")==0) {//일정 등록
-				String title = (String)request.getAttribute("title");
-				String explanation = (String)request.getAttribute("explanation");
-				String startDate = (String)request.getAttribute("startDate");
-				String endDate = (String)request.getAttribute("endDate");
-				String userId = (String)request.getAttribute("userId");
+				String title = (String)request.getParameter("title");
+				String explanation = (String)request.getParameter("explanation"); //없으면 길이 0임
+				String startDate = (String)request.getParameter("startDate");
+				String endDate = (String)request.getParameter("endDate");
+				String userId = (String)session.getAttribute("userId");
+				AppointmentDAO Adao = new AppointmentDAO();
+				AppointmentVO Avo = new AppointmentVO();
+				Avo.setTitle(title);
+				Avo.setStartDate(startDate);
+				Avo.setEndDate(endDate);
+				Avo.setExplanation(explanation);
+				Avo.setUserId(userId);
 				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate+"&page=1";
 				forwardCase = 1;
 			}
+			
 			//System.out.println("getRequestURI: " + request.getRequestURI());
 			//System.out.println("getServletPath: " + request.getServletPath());
 			//System.out.println("getServletContext: " + request.getServletContext().getContextPath());
