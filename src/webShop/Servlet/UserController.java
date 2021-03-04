@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -78,18 +79,18 @@ public class UserController extends HttpServlet {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
 					// format에 맞게 출력하기 위한 문자열 변환
 					String dTime = formatter.format(systemTime);
-					System.out.println(dTime);
-					/*request.setAttribute("date", dTime);
-					nextPage = nextPage + "/user/todayAppo"; //dispatch는 이렇게(시작이  /webshop에서 시작임)
-					forwardCase = 0; //DISPATCH */ //디스패치
-					nextPage = nextPage + "/webShop/user/todayAppo?date="+dTime+"&page=1";
+					
+					//원래코드
+					//nextPage = nextPage + "/webShop/user/todayAppo?date="+dTime+"&page=1";
+					
+					nextPage = nextPage + "/webShop/todayAppoView2.jsp?date="+dTime+"&page=1";
 					forwardCase = 1;
 				} else {//로그인 실패
 					session.setAttribute("isLogin", "false");
 					nextPage = nextPage + "/webShop/login.jsp"; //redirect는 경로로 (시작이 localhost:8090)임
 					forwardCase = 1; //redirect
 				}
-			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//date(YYYY-MM-DD)의 일정 호출
+			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//date(YYYY-MM-DD)의 일정 호출, 
 				AppointmentDAO Adao = new AppointmentDAO();
 				String date = request.getParameter("date"); //get 방식이면 이렇게
 				String page = request.getParameter("page");
@@ -120,6 +121,18 @@ public class UserController extends HttpServlet {
 				Adao.makeAppo(Avo);
 				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate.substring(0,10)+"&page=1";
 				forwardCase = 1;
+			} else if(action.compareTo("/webShop/user/todayAppoAjax")==0) {
+				//parameter 처리
+				String requestData = request.getReader().lines().collect(Collectors.joining());
+				String[] ParamEqus = requestData.split("&");
+				int paraNum = ParamEqus.length;
+				String[] Params = new String[paraNum];
+				for(int i = 0; i < paraNum; i++) Params[i] = (ParamEqus[i].split("="))[1];
+				String date = Params[0];
+				String page = Params[1];
+				AppointmentDAO Adao = new AppointmentDAO();
+				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
+				forwardCase = -1; //no forwarding
 			}
 			
 			//System.out.println("getRequestURI: " + request.getRequestURI());
@@ -128,10 +141,10 @@ public class UserController extends HttpServlet {
 			//System.out.println("getServerName: " + request.getServerName());
 			//System.out.println("getServerPort: " + request.getServerPort());
 			//System.out.println(nextPage);
-			if(forwardCase==0) { 
+			if(forwardCase==0) { //디스패치
 				RequestDispatcher dis = request.getRequestDispatcher(nextPage); //기본경로는 webShop이고 그뒤에 nextPage가붙나봄.
 				dis.forward(request, response);
-			} else if(forwardCase==1) {
+			} else if(forwardCase==1) { //리다이렉트
 				response.sendRedirect(nextPage);
 			} 
 		} catch(Exception e) {

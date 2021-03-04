@@ -61,8 +61,8 @@
     </div>
     
     
-<script src="webShop/coco/jquery3.3.1.min.js"></script>
-<script src="webShop/coco/semantic.min.js"></script>
+<script src="/webShop/coco/jquery3.3.1.min.js"></script>
+<script src="/webShop/coco/semantic.min.js"></script>
 <script type="text/javascript">
 function fn_validate(){	
     var frmLogin=document.frmLogin;
