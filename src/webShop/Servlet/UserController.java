@@ -132,6 +132,17 @@ public class UserController extends HttpServlet {
 				String page = Params[1];
 				AppointmentDAO Adao = new AppointmentDAO();
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
+				String ret = "{";
+				for(int i = 0; i < paraNum; i++) {
+					ret = ret + Integer.toString(i);
+				}
+				ret = ret.substring(0, ret.length()-1); //마지막 쉼표 제거
+				ret = ret+"}";
+				response.setContentType("application/json");
+				response.setCharacterEncoding("utf-8");
+				PrintWriter out = response.getWriter();
+				out.print(ret);
+				out.flush();
 				forwardCase = -1; //no forwarding
 			}
 			

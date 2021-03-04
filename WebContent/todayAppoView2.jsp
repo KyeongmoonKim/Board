@@ -107,9 +107,17 @@ function test_click(){
          dataType: 'json',
          data: dataJson,
          type: 'post',
-         success: function(data) { // check if available
+         success: function(ret) { // check if available
            //success
-           alert("bye");
+           alert(ret);
+           //for(var i in ret) {
+        	  // var tr = $("<tr></tr>").appendTo("#tav_list");
+        	  // $("<td></td>").text(ret[i]['id']).appendTo(tr);
+        	  // $("<td></td>").text(ret[i]['title']).appendTo(tr);
+        	  // $("<td></td>").text(ret[i]['userId']).appendTo(tr);
+        	//   $("<td></td>").text(ret[i]['startDate']).appendTo(tr);
+        	//   $("<td></td>").text(ret[i]['endDate']).appendTo(tr);
+           //}
          },
          error: function() { // error logging
            console.log('Error!');
