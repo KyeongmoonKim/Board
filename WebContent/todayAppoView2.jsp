@@ -59,13 +59,6 @@
                             </tr>
                         </thead>
                         <tbody id="tav_list">
-                        <tr>
-                        <td><%=currDate%></td>
-                        <td><%=currPage%></td>
-                        <td><%=currDate%></td>
-                        <td><%=currPage%></td>
-                        <td><%=currPage%></td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -109,15 +102,15 @@ function test_click(){
          type: 'post',
          success: function(ret) { // check if available
            //success
-           alert(ret);
-           //for(var i in ret) {
-        	  // var tr = $("<tr></tr>").appendTo("#tav_list");
-        	  // $("<td></td>").text(ret[i]['id']).appendTo(tr);
-        	  // $("<td></td>").text(ret[i]['title']).appendTo(tr);
-        	  // $("<td></td>").text(ret[i]['userId']).appendTo(tr);
-        	//   $("<td></td>").text(ret[i]['startDate']).appendTo(tr);
-        	//   $("<td></td>").text(ret[i]['endDate']).appendTo(tr);
-           //}
+           $( '#tav_list').empty();
+           for(var i in ret) {
+        	  var tr = $("<tr></tr>").appendTo("#tav_list");
+        	  $("<td></td>").text(ret[i]['id']).appendTo(tr);
+        	  $("<td></td>").text(ret[i]['title']).appendTo(tr);
+        	  $("<td></td>").text(ret[i]['userId']).appendTo(tr);
+        	  $("<td></td>").text(ret[i]['startDate']).appendTo(tr);
+        	  $("<td></td>").text(ret[i]['endDate']).appendTo(tr);
+           }
          },
          error: function() { // error logging
            console.log('Error!');

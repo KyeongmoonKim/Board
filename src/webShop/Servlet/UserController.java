@@ -119,7 +119,7 @@ public class UserController extends HttpServlet {
 				Avo.setExplanation(explanation);
 				Avo.setUserId(userId);
 				Adao.makeAppo(Avo);
-				nextPage = nextPage + "/webShop/user/todayAppo?date="+startDate.substring(0,10)+"&page=1";
+				nextPage = nextPage + "/webShop/todayAppoView2.jsp?date="+startDate.substring(0,10)+"&page=1";
 				forwardCase = 1;
 			} else if(action.compareTo("/webShop/user/todayAppoAjax")==0) {
 				//parameter 처리
@@ -130,19 +130,42 @@ public class UserController extends HttpServlet {
 				for(int i = 0; i < paraNum; i++) Params[i] = (ParamEqus[i].split("="))[1];
 				String date = Params[0];
 				String page = Params[1];
+				System.out.println(date);
+				System.out.println(page);
 				AppointmentDAO Adao = new AppointmentDAO();
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
-				String ret = "{";
-				for(int i = 0; i < paraNum; i++) {
-					ret = ret + Integer.toString(i);
+				System.out.println(AppoList.size());
+				String ret = "";
+				if(AppoList.size()!=0) {
+					ret = ret + "{";
+					for(int i = 0; i < AppoList.size(); i++) {
+						AppointmentVO avo = AppoList.get(i);
+						ret = ret + "\""+Integer.toString(i)+ "\" : ";
+						ret = ret+"{";
+						ret = ret + "\"id\" : ";
+						ret = ret + "\"" + Integer.toString(avo.getId())+ "\",";
+						ret = ret + "\"title\" : ";
+						ret = ret + "\""+avo.getTitle()+ "\",";
+						ret = ret + "\"explnation\" : ";
+						ret = ret + "\""+avo.getExplanation()+ "\",";
+						ret = ret + "\"startDate\" : ";
+						ret = ret + "\""+avo.getStartDate()+ "\",";
+						ret = ret + "\"endDate\" : ";
+						ret = ret + "\""+avo.getEndDate()+ "\",";
+						ret = ret + "\"userId\" : ";
+						ret = ret + "\""+avo.getUserId()+ "\"";
+						ret = ret+"}";
+						ret = ret+",";
+					}
+					ret = ret.substring(0, ret.length()-1); //마지막 쉼표 제거
+					ret = ret+"}";
+					//System.out.println(ret);
+					response.setContentType("application/json");
+					response.setCharacterEncoding("utf-8");
+					PrintWriter out = response.getWriter();
+					out.print(ret);
+					//out.flush(); 
 				}
-				ret = ret.substring(0, ret.length()-1); //마지막 쉼표 제거
-				ret = ret+"}";
-				response.setContentType("application/json");
-				response.setCharacterEncoding("utf-8");
-				PrintWriter out = response.getWriter();
-				out.print(ret);
-				out.flush();
 				forwardCase = -1; //no forwarding
 			}
 			
