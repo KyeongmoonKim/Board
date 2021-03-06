@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 
-
+<!-- 일정 등록 창  -->
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/webShop/coco/semantic.min.css">
 <style type="text/css">
@@ -56,7 +56,7 @@
 
             </form>
 
-            <a href="/webShop/user/todayAppo"><button class="ui fluid large teal submit button">뒤로가기</button></a>
+            <a href="/webShop/todayAppoView2.jsp"><button class="ui fluid large teal submit button">뒤로가기</button></a>
         </div>
     </div>
     

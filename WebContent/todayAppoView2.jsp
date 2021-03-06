@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
+    import="webShop.Sevice.*, java.util.*, java.text.SimpleDateFormat" pageEncoding="UTF-8"%>
 
 <!-- 일일 일정 게시판 -->
 <!-- 이 페이지는 항상 get방식으로 와야함. date랑  page로 -->
 <%
 	String currDate = request.getParameter("date");
 	String currPage = request.getParameter("page");
+	if(currDate==null) {//없을 땐 현재 날짜.
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		long systemTime = System.currentTimeMillis();
+		currDate = formatter.format(systemTime);
+	}
+	if(currPage==null) currPage = "1";
 %>
 <!DOCTYPE html>
 <html>
@@ -91,6 +97,7 @@
 
 <script src="/webShop/coco/jquery3.3.1.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
 var dataJson = {
         currDate : "<%=currDate%>",
         currPage : "<%=currPage%>"
@@ -126,6 +133,8 @@ function get_Appointment(){
 		 get_Appointment();
 	 }, 2000);
 	 get_Appointment();
- })();
+ })(); 
+ 
+ });
 </script>
 </html>

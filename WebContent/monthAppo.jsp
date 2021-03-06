@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
+<!-- 월 일정 창 -->
 <!DOCTYPE html>
 <html>
 <head>

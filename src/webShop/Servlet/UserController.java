@@ -130,8 +130,8 @@ public class UserController extends HttpServlet {
 				for(int i = 0; i < paraNum; i++) Params[i] = (ParamEqus[i].split("="))[1];
 				String date = Params[0];
 				String page = Params[1];
-				System.out.println(date);
-				System.out.println(page);
+				//System.out.println(date);
+				//System.out.println(page);
 				AppointmentDAO Adao = new AppointmentDAO();
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
 				System.out.println(AppoList.size());
@@ -166,6 +166,11 @@ public class UserController extends HttpServlet {
 					out.print(ret);
 					//out.flush(); 
 				}
+				forwardCase = -1; //no forwarding
+			} else if(action.compareTo("/webShop/user/getIdAppo")==0) { //ajax
+				String requestData = request.getReader().lines().collect(Collectors.joining());
+				String id = (requestData.split("="))[1];
+				AppointmentDAO Adao = new AppointmentDAO();
 				forwardCase = -1; //no forwarding
 			}
 			
