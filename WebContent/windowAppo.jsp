@@ -52,7 +52,7 @@
                     <table class="ui celled table" id="tav_table">
                         <thead>
                             <tr>
-                                <th>일정</th>
+                                <th id="th_1">일정</th>
                             </tr>
                         </thead>
                         <tbody id="tav_list">
@@ -70,36 +70,37 @@
 <script src="/webShop/coco/jquery3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-var dataJson = {
+	var dataJson = {
         currId : "<%=currId%>"
-};
-function get_Appointment(){	
-	 $.ajax({
-         url: '/webShop/user/getIdAppo',
-         dataType: 'json',
-         data: dataJson,
-         type: 'post',
-         success: function(ret) { // check if available
-           //success
-           /*$( '#tav_list').empty();
-           for(var i in ret) {
-        	  var tr1 = $("<tr></tr>").appendTo("#tav_list");
-        	  $("<td></td>").text(ret[i]['id']).appendTo(tr);
-        	  //var temp1 = $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']);
-        	  //var temp2 = $("<td></td>").appendTo(tr);
-        	  $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']).text(ret[i]['title']).appendTo($("<td></td>").appendTo(tr));
-        	  //$("<td></td>").text(ret[i]['title']).appendTo(tr);
-        	  $("<td></td>").text(ret[i]['userId']).appendTo(tr);
-        	  $("<td></td>").text(ret[i]['startDate']).appendTo(tr);
-        	  $("<td></td>").text(ret[i]['endDate']).appendTo(tr);
-           }*/
+	};
+	function get_Appointment(){	
+		$.ajax({
+        url: '/webShop/user/getIdAppo',
+        dataType: 'json',
+        data: dataJson,
+        type: 'post',
+        success: function(ret) { // check if available, 결과값 예시 {"id" : "16","title" : "맘터","explnation" : "저녁","startDate" : "2021-03-06-20-20","endDate" : "2021-03-06-20-40","userId" : "kkm8031"}
+        	//$("#tav_table").attr('table-layout', 'fixed');
+        	$("#th_1").attr("colspan", 2);
+        	var tr0 = $("<tr></tr>").appendTo("#tav_list"); // 제목 일정제목
+        	$("<td></td>").text('일정명').appendTo(tr0);
+        	$("<td></td>").text(ret['title']).appendTo(tr0);
+        	var tr1 = $("<tr></tr>").appendTo("#tav_list"); // 작성자 이름(td태그 2개를 가짐)
+        	$("<td></td>").text('작성자').appendTo(tr1);
+        	$("<td></td>").text(ret['userId']).appendTo(tr1);
+        	var tr2 = $("<tr></tr>").appendTo("#tav_list"); // 일정 시작일~일정 종료일
+        	$("<td></td>").attr("colspan", 2).text(ret['startDate']+'~'+ret['endDate']).appendTo(tr2);
+        	var tr3 = $("<tr></tr>").attr('height', '250px').appendTo("#tav_list"); //내용
+        	$("<td></td>").attr("colspan", 2).text(ret['explanation']).appendTo(tr3);
+        	
+        	
          },
          error: function() { // error logging
            console.log('Error!');
          }
        });
- }
- get_Appointment();
+ 	}
+ 	get_Appointment();
  });
  </script>
 </html>

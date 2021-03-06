@@ -21,13 +21,16 @@ public class AppointmentDAO {
 		}
 	}
 	
-	public ArrayList<AppointmentVO> dayAppo(String date) {//date는 YYYY-MM-DD임.
+	public ArrayList<AppointmentVO> dayAppo(String date) {//date는 YYYY-MM-DD임. date날짜의 모든 일정 조회
 		ArrayList<AppointmentVO> AppoList = new ArrayList<AppointmentVO>();
 		try {
+			//db연결 및 쿼리 작성
 			con = dataFactory.getConnection();
+			//삭제 비트 비활성화 된 것 중에 골라야함.
 			String q = "SELECT ID, TITLE, EXPLANATION, STARTDATE, ENDDATE, USERID FROM MYAPPOINTMENT WHERE STARTDATE LIKE ? AND ISDELETED=0";
 			pstmt = con.prepareStatement(q);
 			pstmt.setString(1, date+"%");
+			//쿼리 수행 및 저장
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				AppointmentVO avo = new AppointmentVO();
@@ -39,6 +42,7 @@ public class AppointmentDAO {
 				avo.setUserId(rs.getString("USERID"));
 				AppoList.add(avo);
 			}
+			//상태 종료
 			rs.close();
 			pstmt.close();
 			con.close();
@@ -47,7 +51,45 @@ public class AppointmentDAO {
 		}
 		return AppoList;
 	}
-	public void makeAppo(AppointmentVO Avo) {
+	
+	public AppointmentVO getAppoWithId(String id) { //특정 id의 일정 조회
+		AppointmentVO avo= new AppointmentVO();
+		try {
+			//db 연결 및 쿼리 작성
+			con = dataFactory.getConnection();
+			int key = Integer.parseInt(id); //id가 기본 키임
+			String q = "SELECT * FROM MYAPPOINTMENT WHERE ID=?";
+			pstmt = con.prepareStatement(q);
+			pstmt.setInt(1, key);
+			
+			//쿼리 수행 결과 저장
+			ResultSet rs = pstmt.executeQuery();
+			int chk = 0;
+			while(rs.next()) {
+				if(rs.getInt("ISDELETED")==1) chk = 1;
+				avo.setId(rs.getInt("ID"));//아이디 세팅
+				avo.setTitle(rs.getString("TITLE"));
+				avo.setExplanation(rs.getString("EXPLANATION"));
+				avo.setStartDate(rs.getString("STARTDATE"));
+				avo.setEndDate(rs.getString("ENDDATE"));
+				avo.setUserId(rs.getString("USERID"));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+			if(chk==1) { //삭제된 걸 상세 일정으로 보고있음. 추가에러처리 나중에 해야할듯(에러 페이지로 보내기 에러분기만 만들어놓자)
+				System.out.println("getAppoWithId Error : 삭제된 일정 상세보기 시도");
+				return null;
+			}
+			//상태 종료
+		}
+			catch(Exception e) {
+			e.printStackTrace();
+		}
+		return avo;
+	}
+	
+	public void makeAppo(AppointmentVO Avo) { //일정 등록, 단순 1줄 짜리 삽입이라 transaction 명시 안했음. 
 		try {
 			con = dataFactory.getConnection();
 			String q = "INSERT INTO MYAPPOINTMENT VALUES (EMP_SEQ.NEXTVAL, ?, ?, ?, ?, 0, ?)";

@@ -90,7 +90,7 @@ public class UserController extends HttpServlet {
 					nextPage = nextPage + "/webShop/login.jsp"; //redirect는 경로로 (시작이 localhost:8090)임
 					forwardCase = 1; //redirect
 				}
-			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//date(YYYY-MM-DD)의 일정 호출, 
+			} else if(action.compareTo("/webShop/user/todayAppo")==0) {//date(YYYY-MM-DD)의 일정 호출, 특정 날짜의 모든 일정 조회, 이거 안쓰고 있음.
 				AppointmentDAO Adao = new AppointmentDAO();
 				String date = request.getParameter("date"); //get 방식이면 이렇게
 				String page = request.getParameter("page");
@@ -121,7 +121,7 @@ public class UserController extends HttpServlet {
 				Adao.makeAppo(Avo);
 				nextPage = nextPage + "/webShop/todayAppoView2.jsp?date="+startDate.substring(0,10)+"&page=1";
 				forwardCase = 1;
-			} else if(action.compareTo("/webShop/user/todayAppoAjax")==0) {
+			} else if(action.compareTo("/webShop/user/todayAppoAjax")==0) {//AJAX통신을 통해서 금일 일정 조회
 				//parameter 처리
 				String requestData = request.getReader().lines().collect(Collectors.joining());
 				String[] ParamEqus = requestData.split("&");
@@ -146,7 +146,7 @@ public class UserController extends HttpServlet {
 						ret = ret + "\"" + Integer.toString(avo.getId())+ "\",";
 						ret = ret + "\"title\" : ";
 						ret = ret + "\""+avo.getTitle()+ "\",";
-						ret = ret + "\"explnation\" : ";
+						ret = ret + "\"explanation\" : ";
 						ret = ret + "\""+avo.getExplanation()+ "\",";
 						ret = ret + "\"startDate\" : ";
 						ret = ret + "\""+avo.getStartDate()+ "\",";
@@ -167,10 +167,33 @@ public class UserController extends HttpServlet {
 					//out.flush(); 
 				}
 				forwardCase = -1; //no forwarding
-			} else if(action.compareTo("/webShop/user/getIdAppo")==0) { //ajax
+			} else if(action.compareTo("/webShop/user/getIdAppo")==0) { //ajax 통신을 통해서 특정 id에 해당하는 일정 모든 정보 조회
 				String requestData = request.getReader().lines().collect(Collectors.joining());
+				System.out.println(requestData);
 				String id = (requestData.split("="))[1];
+				System.out.println(id);
 				AppointmentDAO Adao = new AppointmentDAO();
+				AppointmentVO avo = Adao.getAppoWithId(id);
+				String ret = "";
+				ret = ret+"{";
+				ret = ret + "\"id\" : ";
+				ret = ret + "\"" + Integer.toString(avo.getId())+ "\",";
+				ret = ret + "\"title\" : ";
+				ret = ret + "\""+avo.getTitle()+ "\",";
+				ret = ret + "\"explanation\" : ";
+				ret = ret + "\""+avo.getExplanation()+ "\",";
+				ret = ret + "\"startDate\" : ";
+				ret = ret + "\""+avo.getStartDate()+ "\",";
+				ret = ret + "\"endDate\" : ";
+				ret = ret + "\""+avo.getEndDate()+ "\",";
+				ret = ret + "\"userId\" : ";
+				ret = ret + "\""+avo.getUserId()+ "\"";
+				ret = ret+"}";
+				//System.out.println(ret);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("utf-8");
+				PrintWriter out = response.getWriter();
+				out.print(ret);
 				forwardCase = -1; //no forwarding
 			}
 			
