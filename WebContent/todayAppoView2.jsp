@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
 
+<!-- 일일 일정 게시판 -->
 <!-- 이 페이지는 항상 get방식으로 와야함. date랑  page로 -->
 <%
 	String currDate = request.getParameter("date");
@@ -106,7 +107,10 @@ function get_Appointment(){
            for(var i in ret) {
         	  var tr = $("<tr></tr>").appendTo("#tav_list");
         	  $("<td></td>").text(ret[i]['id']).appendTo(tr);
-        	  $("<td></td>").text(ret[i]['title']).appendTo(tr);
+        	  //var temp1 = $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']);
+        	  //var temp2 = $("<td></td>").appendTo(tr);
+        	  $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']).text(ret[i]['title']).appendTo($("<td></td>").appendTo(tr));
+        	  //$("<td></td>").text(ret[i]['title']).appendTo(tr);
         	  $("<td></td>").text(ret[i]['userId']).appendTo(tr);
         	  $("<td></td>").text(ret[i]['startDate']).appendTo(tr);
         	  $("<td></td>").text(ret[i]['endDate']).appendTo(tr);

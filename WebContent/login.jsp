@@ -5,6 +5,8 @@
 	System.out.println("isLogin is ");
 	if(isLogin!=null) System.out.println(isLogin);
 %>
+
+<!-- 로그인 창 -->
 <!DOCTYPE html>
 <html>
 <head>
