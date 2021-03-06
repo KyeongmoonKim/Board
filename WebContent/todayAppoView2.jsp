@@ -46,7 +46,7 @@
             </h2>
             <div class="ui large form">
                 <div class="ui stacked segment">
-                	<button class="ui fluid large teal submit button" onClick="test_click()">ajax보내기</button><br> 
+                	<a href="/webShop/monthAppo.jsp"><button class="ui fluid large teal submit button">다른 일정 보기</button></a><br>
                     <a href="/webShop/makeAppo.jsp"><button class="ui fluid large teal submit button">일정 등록하기</button></a>
                     <table class="ui celled table" id="tav_table">
                         <thead>
@@ -94,7 +94,7 @@ var dataJson = {
         currDate : "<%=currDate%>",
         currPage : "<%=currPage%>"
 };
-function test_click(){	
+function get_Appointment(){	
 	 $.ajax({
          url: '/webShop/user/todayAppoAjax',
          dataType: 'json',
@@ -117,5 +117,11 @@ function test_click(){
          }
        });
  }
+ (function() {
+	 var pollinterval = setInterval(function() {
+		 get_Appointment();
+	 }, 2000);
+	 get_Appointment();
+ })();
 </script>
 </html>
