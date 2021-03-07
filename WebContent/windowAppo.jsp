@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
-<!-- 특정 id 일정 상세 보기 -->
+<!-- 특정 id 일정 상세 보기, 수정은 링크로 넘기고 삭제는 그냥 바로 컨트롤러로 보냄. 이 때, 작성자 id가 일치하는지 체크해야함. 현재 session의 로그인아이디가 -->
 <%
 	String currId = request.getParameter("id");
 %>
@@ -47,7 +47,7 @@
             </h2>
             <div class="ui large form">
                 <div class="ui stacked segment">
-                	<a href="/webShop/monthAppo.jsp"><button class="ui fluid large teal submit button">일정 삭제</button></a><br>
+                	<button class="ui fluid large teal submit button" id="btn_0">일정 삭제</button><br>
                     <button class="ui fluid large teal submit button" id="btn_1">일정 수정</button>
                     <table class="ui celled table" id="tav_table">
                         <thead>
@@ -112,7 +112,35 @@ $(document).ready(function() {
          }
        });
  	}
-	$("#btn_1").click(function(){
+
+	$("#btn_0").click(function(){ //일정 삭제 버튼
+		$.ajax({
+			url: '/webShop/user/checkId',
+			dataType: 'text',
+			data: param6,
+			type: 'post',
+			success: function(ret) {
+				if(ret=="true") {
+					var form0 = document.createElement('form');
+					var obj0 = document.createElement('input');
+					obj0.setAttribute('id', param1); //글 id 저장
+					form0.appendChild(obj0);
+					form0.setAttribute('method', 'post');
+					form0.setAttribute('action', "/webShop/reviseAppo.jsp");
+					document.body.appendChild(form0);
+					form0.submit();
+				} else {
+					alert("이 일정의 작성자가 아닙니다!")
+				}
+			},
+	        error: function() { // error logging
+	             console.log('Error!');
+	        }
+		});
+		
+	});
+	
+	$("#btn_1").click(function(){ //일정 수정 버튼
 		var form = document.createElement('form');
 		var objs;
 		objs = document.createElement('input');
