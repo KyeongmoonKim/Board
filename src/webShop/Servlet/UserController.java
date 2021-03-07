@@ -46,7 +46,7 @@ public class UserController extends HttpServlet {
 		doHandle(request, response);
 	}
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8"); //굉장히 중요
 		String action = request.getRequestURI();
 		System.out.println(action);
 		String nextPage = "";

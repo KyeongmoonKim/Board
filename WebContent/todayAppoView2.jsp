@@ -4,6 +4,7 @@
 <!-- 일일 일정 게시판 -->
 <!-- 이 페이지는 항상 get방식으로 와야함. date랑  page로 -->
 <%
+	request.setCharacterEncoding("utf-8"); 
 	String currDate = request.getParameter("date");
 	String currPage = request.getParameter("page");
 	if(currDate==null) {//없을 땐 현재 날짜.

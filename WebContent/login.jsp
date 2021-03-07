@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%	String isLogin = (String)session.getAttribute("isLogin");
+<%	
+	request.setCharacterEncoding("utf-8"); 
+	String isLogin = (String)session.getAttribute("isLogin");
 	System.out.println("isLogin is ");
 	if(isLogin!=null) System.out.println(isLogin);
 %>

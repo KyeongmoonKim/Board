@@ -2,6 +2,7 @@
     import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
 <!-- 특정 id 일정 상세 보기, 수정은 링크로 넘기고 삭제는 그냥 바로 컨트롤러로 보냄. 이 때, 작성자 id가 일치하는지 체크해야함. 현재 session의 로그인아이디가 -->
 <%
+	request.setCharacterEncoding("utf-8"); 
 	String currId = request.getParameter("id");
 %>
 <!DOCTYPE html>
@@ -147,12 +148,11 @@ $(document).ready(function() {
 			url: '/webShop/user/checkId',
 			dataType: 'text',
 			data: {reqValue : param6 },
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			//contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			type: 'get',
 			success: function(ret) {
 				if(ret=="true") {
-					var form = document.createElement('form');
-					form.acceptCharset="UTF-8";
+					var form = document.createElement('form'); //기존코드
 					var form_input1, form_input2, form_input3, form_input4, form_input5, form_input6
 					form_input1 = document.createElement('input');
 					form_input2 = document.createElement('input');
@@ -160,7 +160,7 @@ $(document).ready(function() {
 					form_input4 = document.createElement('input');
 					form_input5 = document.createElement('input');
 					form_input6 = document.createElement('input');
-					
+					//alert(param2);
 					form_input1.setAttribute('type', 'hidden');
 					form_input1.setAttribute('name', 'id');
 					form_input1.setAttribute('value',  param1);
