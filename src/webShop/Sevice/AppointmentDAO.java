@@ -101,6 +101,26 @@ public class AppointmentDAO {
 			pstmt.setString(4,  Avo.getEndDate()); //종료일
 			pstmt.setString(5,  Avo.getUserId());
 			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void reviseAppo(AppointmentVO Avo) {
+		try {
+			con = dataFactory.getConnection();
+			String q = "UPDATE MYAPPOINTMENT SET TITLE=?, EXPLANATION=?, STARTDATE=?, ENDDATE=? WHERE ID=?";
+			pstmt = con.prepareStatement(q);
+			pstmt.setString(1,  Avo.getTitle()); //제목
+			if(Avo.getExplanation().length()==0) pstmt.setString(2,  "No Explanation"); //내용
+			else pstmt.setString(2,  Avo.getExplanation()); //내용
+			pstmt.setString(3,  Avo.getStartDate()); //시작일
+			pstmt.setString(4,  Avo.getEndDate()); //종료일
+			pstmt.setInt(5, Avo.getId());
+			pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

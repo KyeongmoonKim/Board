@@ -121,6 +121,25 @@ public class UserController extends HttpServlet {
 				Adao.makeAppo(Avo);
 				nextPage = nextPage + "/webShop/todayAppoView2.jsp?date="+startDate.substring(0,10)+"&page=1";
 				forwardCase = 1;
+			} else if(action.compareTo("/webShop/user/updateAppo")==0){ // 일정 수정
+				String id = (String)request.getParameter("id");
+				String title = (String)request.getParameter("title");
+				String explanation = (String)request.getParameter("explanation"); //없으면 길이 0임
+				String startDate = (String)request.getParameter("startDate");
+				String endDate = (String)request.getParameter("endDate");
+				String userId = (String)session.getAttribute("userId");
+				AppointmentDAO Adao = new AppointmentDAO();
+				AppointmentVO Avo = new AppointmentVO();
+				Avo.setId(Integer.parseInt(id));
+				Avo.setTitle(title);
+				Avo.setStartDate(startDate);
+				Avo.setEndDate(endDate);
+				Avo.setExplanation(explanation);
+				Avo.setUserId(userId);
+				Avo.setUserId(userId);
+				Adao.reviseAppo(Avo);
+				nextPage = nextPage + "/webShop/todayAppoView2.jsp?date="+startDate.substring(0,10)+"&page=1";
+				forwardCase = 1;
 			} else if(action.compareTo("/webShop/user/todayAppoAjax")==0) {//AJAX통신을 통해서 금일 일정 조회
 				//parameter 처리
 				String requestData = request.getReader().lines().collect(Collectors.joining());
@@ -195,9 +214,10 @@ public class UserController extends HttpServlet {
 				PrintWriter out = response.getWriter();
 				out.print(ret);
 				forwardCase = -1; //no forwarding
-			} else if(action.compareTo("/webShop/user/deleteAppo")==0) {  //일정삭제 (id만 받아오면 됌)
+			} else if(action.compareTo("/webShop/user/deleteAppo")==0) {  //일정삭제 (id만 받아오면 됌) ISDELETED 1로만들꺼임.
 				String id = (String)request.getParameter("id");
 				System.out.println(id);
+				//ISDELETED 1로 바꾸면 끝.
 				nextPage = nextPage + "/webShop/todayAppoView2.jsp"; //삭제 하고 돌려보냄.
 				forwardCase = 1;
 			} else if(action.compareTo("/webShop/user/checkId")==0) { //세션 아이디랑 같은지 아닌지 
