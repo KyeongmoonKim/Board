@@ -117,8 +117,8 @@ $(document).ready(function() {
 		$.ajax({
 			url: '/webShop/user/checkId',
 			dataType: 'text',
-			data: param6,
-			type: 'post',
+			data: {reqValue : param6 },
+			type: 'get',
 			success: function(ret) {
 				if(ret=="true") {
 					var form0 = document.createElement('form');
@@ -126,7 +126,7 @@ $(document).ready(function() {
 					obj0.setAttribute('id', param1); //글 id 저장
 					form0.appendChild(obj0);
 					form0.setAttribute('method', 'post');
-					form0.setAttribute('action', "/webShop/reviseAppo.jsp");
+					form0.setAttribute('action', "/webShop/user/deleteAppo");
 					document.body.appendChild(form0);
 					form0.submit();
 				} else {
@@ -141,20 +141,35 @@ $(document).ready(function() {
 	});
 	
 	$("#btn_1").click(function(){ //일정 수정 버튼
-		var form = document.createElement('form');
-		var objs;
-		objs = document.createElement('input');
-		objs.setAttribute('id',  param1);
-		objs.setAttribute('title',  param2);
-		objs.setAttribute('startDate', param3);
-		objs.setAttribute('endDate',  param4);
-		objs.setAttribute('explanation',  param5);
-		objs.setAttribute('userId', param6);
-		form.appendChild(objs);
-		form.setAttribute('method', 'post');
-		form.setAttribute('action', "/webShop/reviseAppo.jsp");
-		document.body.appendChild(form);
-		form.submit();
+		$.ajax({
+			url: '/webShop/user/checkId',
+			dataType: 'text',
+			data: {reqValue : param6 },
+			type: 'get',
+			success: function(ret) {
+				if(ret=="true") {
+					var form = document.createElement('form');
+					var objs;
+					objs = document.createElement('input');
+					objs.setAttribute('id',  param1);
+					objs.setAttribute('title',  param2);
+					objs.setAttribute('startDate', param3);
+					objs.setAttribute('endDate',  param4);
+					objs.setAttribute('explanation',  param5);
+					objs.setAttribute('userId', param6);
+					form.appendChild(objs);
+					form.setAttribute('method', 'post');
+					form.setAttribute('action', "/webShop/reviseAppo.jsp");
+					document.body.appendChild(form);
+					form.submit();
+				} else {
+					alert("이 일정의 작성자가 아닙니다!")
+				}
+			},
+	        error: function() { // error logging
+	             console.log('Error!');
+	        }
+		});
 	});
 	
  	get_Appointment();

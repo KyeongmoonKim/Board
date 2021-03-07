@@ -197,11 +197,11 @@ public class UserController extends HttpServlet {
 				forwardCase = -1; //no forwarding
 			} else if(action.compareTo("/webShop/user/deleteAppo")==0) {  //일정삭제 (id만 받아오면 됌)
 				String id = (String)request.getParameter("id");
-				
+				System.out.println(id);
 				nextPage = nextPage + "/webShop/todayAppoView2.jsp"; //삭제 하고 돌려보냄.
 				forwardCase = 1;
 			} else if(action.compareTo("/webShop/user/checkId")==0) { //세션 아이디랑 같은지 아닌지 
-				String boardMakerId = (String)request.getParameter("id");
+				String boardMakerId = (String)request.getParameter("reqValue");
 				String loginId = (String)session.getAttribute("userId");
 				System.out.println(boardMakerId);
 				System.out.println(loginId);
