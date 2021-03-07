@@ -216,8 +216,8 @@ public class UserController extends HttpServlet {
 				forwardCase = -1; //no forwarding
 			} else if(action.compareTo("/webShop/user/deleteAppo")==0) {  //일정삭제 (id만 받아오면 됌) ISDELETED 1로만들꺼임.
 				String id = (String)request.getParameter("id");
-				System.out.println(id);
-				//ISDELETED 1로 바꾸면 끝.
+				AppointmentDAO Adao = new AppointmentDAO();
+				Adao.deleteAppo(id);
 				nextPage = nextPage + "/webShop/todayAppoView2.jsp"; //삭제 하고 돌려보냄.
 				forwardCase = 1;
 			} else if(action.compareTo("/webShop/user/checkId")==0) { //세션 아이디랑 같은지 아닌지 

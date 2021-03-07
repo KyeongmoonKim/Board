@@ -125,6 +125,23 @@ public class AppointmentDAO {
 			e.printStackTrace();
 		}
 	}
+	public void deleteAppo(String id) {
+		try {
+			con = dataFactory.getConnection();
+			int key = Integer.parseInt(id);
+			
+			String q = "UPDATE MYAPPOINTMENT SET ISDELETED=1 WHERE ID=?";
+			pstmt = con.prepareStatement(q);
+			pstmt.setInt(1,  key); //Å° ¼³Á¤
+			
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 
