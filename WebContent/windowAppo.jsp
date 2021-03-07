@@ -2,7 +2,7 @@
     import="webShop.Sevice.*, java.util.*" pageEncoding="UTF-8"%>
 <!-- 특정 id 일정 상세 보기 -->
 <%
-	String currId = request.getParameter("id"); 
+	String currId = request.getParameter("id");
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +48,7 @@
             <div class="ui large form">
                 <div class="ui stacked segment">
                 	<a href="/webShop/monthAppo.jsp"><button class="ui fluid large teal submit button">일정 삭제</button></a><br>
-                    <a href="/webShop/makeAppo.jsp"><button class="ui fluid large teal submit button">일정 수정</button></a>
+                    <button class="ui fluid large teal submit button" id="btn_1">일정 수정</button>
                     <table class="ui celled table" id="tav_table">
                         <thead>
                             <tr>
@@ -63,6 +63,7 @@
                 <div class="ui error message"></div>
 
             </div>
+            <a href="/webShop/todayAppoView2.jsp"><button class="ui fluid large teal submit button">뒤로가기</button></a>
         </div>
     </div>
 </body>
@@ -73,6 +74,12 @@ $(document).ready(function() {
 	var dataJson = {
         currId : "<%=currId%>"
 	};
+	var param1;
+	var param2;
+	var param3;
+	var param4;
+	var param5;
+	var param6;
 	function get_Appointment(){	
 		$.ajax({
         url: '/webShop/user/getIdAppo',
@@ -89,17 +96,39 @@ $(document).ready(function() {
         	$("<td></td>").text('작성자').appendTo(tr1);
         	$("<td></td>").text(ret['userId']).appendTo(tr1);
         	var tr2 = $("<tr></tr>").appendTo("#tav_list"); // 일정 시작일~일정 종료일
-        	$("<td></td>").attr("colspan", 2).text(ret['startDate']+'~'+ret['endDate']).appendTo(tr2);
+        	$("<td></td>").attr("colspan", 2).attr("text-align", "left").text(ret['startDate']+'~'+ret['endDate']).appendTo(tr2);
         	var tr3 = $("<tr></tr>").attr('height', '250px').appendTo("#tav_list"); //내용
-        	$("<td></td>").attr("colspan", 2).text(ret['explanation']).appendTo(tr3);
-        	
-        	
+        	$("<td></td>").attr("colspan", 2).text(ret['explanation']).appendTo(tr3); 
+        	//변수저장
+        	param1 = ret['id'];
+        	param2 = ret['title'];
+        	param3 = ret['startDate'];
+        	param4 = ret['endDate'];
+        	param5 = ret['explanation'];
+        	param6 = ret['userId'];
          },
          error: function() { // error logging
            console.log('Error!');
          }
        });
  	}
+	$("#btn_1").click(function(){
+		var form = document.createElement('form');
+		var objs;
+		objs = document.createElement('input');
+		objs.setAttribute('id',  param1);
+		objs.setAttribute('title',  param2);
+		objs.setAttribute('startDate', param3);
+		objs.setAttribute('endDate',  param4);
+		objs.setAttribute('explanation',  param5);
+		objs.setAttribute('userId', param6);
+		form.appendChild(objs);
+		form.setAttribute('method', 'post');
+		form.setAttribute('action', "/webShop/reviseAppo.jsp");
+		document.body.appendChild(form);
+		form.submit();
+	});
+	
  	get_Appointment();
  });
  </script>
