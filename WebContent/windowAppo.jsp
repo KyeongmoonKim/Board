@@ -123,7 +123,9 @@ $(document).ready(function() {
 				if(ret=="true") {
 					var form0 = document.createElement('form');
 					var obj0 = document.createElement('input');
-					obj0.setAttribute('id', param1); //글 id 저장
+					obj0.setAttribute('type', 'hidden');
+					obj0.setAttribute('name', 'id');
+					obj0.setAttribute('value', param1); //글 id 저장
 					form0.appendChild(obj0);
 					form0.setAttribute('method', 'post');
 					form0.setAttribute('action', "/webShop/user/deleteAppo");
@@ -145,19 +147,45 @@ $(document).ready(function() {
 			url: '/webShop/user/checkId',
 			dataType: 'text',
 			data: {reqValue : param6 },
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			type: 'get',
 			success: function(ret) {
 				if(ret=="true") {
 					var form = document.createElement('form');
-					var objs;
-					objs = document.createElement('input');
-					objs.setAttribute('id',  param1);
-					objs.setAttribute('title',  param2);
-					objs.setAttribute('startDate', param3);
-					objs.setAttribute('endDate',  param4);
-					objs.setAttribute('explanation',  param5);
-					objs.setAttribute('userId', param6);
-					form.appendChild(objs);
+					form.acceptCharset="UTF-8";
+					var form_input1, form_input2, form_input3, form_input4, form_input5, form_input6
+					form_input1 = document.createElement('input');
+					form_input2 = document.createElement('input');
+					form_input3 = document.createElement('input');
+					form_input4 = document.createElement('input');
+					form_input5 = document.createElement('input');
+					form_input6 = document.createElement('input');
+					
+					form_input1.setAttribute('type', 'hidden');
+					form_input1.setAttribute('name', 'id');
+					form_input1.setAttribute('value',  param1);
+					form_input2.setAttribute('type', 'hidden');
+					form_input2.setAttribute('name', 'title')
+					form_input2.setAttribute('value',  param2);
+					form_input3.setAttribute('type', 'hidden');
+					form_input3.setAttribute('name', 'startDate');
+					form_input3.setAttribute('value',  param3);
+					form_input4.setAttribute('type', 'hidden');
+					form_input4.setAttribute('name', 'endDate');
+					form_input4.setAttribute('value',  param4);
+					form_input5.setAttribute('type', 'hidden');
+					form_input5.setAttribute('name', 'explanation');
+					form_input5.setAttribute('value',  param5);
+					form_input6.setAttribute('type', 'hidden');
+					form_input6.setAttribute('name', 'userId');
+					form_input6.setAttribute('value',  param6);
+					
+					form.appendChild(form_input1);
+					form.appendChild(form_input2);
+					form.appendChild(form_input3);
+					form.appendChild(form_input4);
+					form.appendChild(form_input5);
+					form.appendChild(form_input6);
 					form.setAttribute('method', 'post');
 					form.setAttribute('action', "/webShop/reviseAppo.jsp");
 					document.body.appendChild(form);
