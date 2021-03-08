@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/webShop/coco/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="./coco/semantic.min.css">
 <style type="text/css">
         body {
             background-color: #DADADA;
@@ -69,7 +69,7 @@
     </div>
 </body>
 
-<script src="/webShop/coco/jquery3.3.1.min.js"></script>
+<script src="./coco/jquery3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	var dataJson = {

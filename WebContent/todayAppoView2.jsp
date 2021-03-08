@@ -20,7 +20,7 @@
 <!-- 여기에 polling부분도 들어가야함 3초마다 한번씩 폴링하게 하자. 폴링은 ajax로 하는게 아니라 그냥 3초마다 form에 현재 날짜 기준으로 그냥 찍어서 보내면 되는거임. usercontroller에 -->
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/webShop/coco/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="./coco/semantic.min.css">
 <style type="text/css">
         body {
             background-color: #DADADA;
@@ -96,7 +96,7 @@
     </div>
 </body>
 
-<script src="/webShop/coco/jquery3.3.1.min.js"></script>
+<script src="./coco/jquery3.3.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 var dataJson = {

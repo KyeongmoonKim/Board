@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/webShop/coco/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="./coco/semantic.min.css">
 <style type="text/css">
         body {
             background-color: #DADADA;
@@ -35,10 +35,12 @@
 
     </style>
         
-<script src="/webShop/coco/jquery3.3.1.min.js"></script>
+<script src="./coco/jquery3.3.1.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
+	//document.getElementById("title").value = "";
+	$("#title").attr("value", "<%=title%>");
 	$("#btn_0").click(function(){
 	    var frmLogin=document.frmLogin;
 	    var obj0 = document.createElement('input');
@@ -77,7 +79,7 @@ $(document).ready(function() {
             <form class="ui large form" name="frmLogin" id="frmRevise">
                 <div class="ui stacked segment">
                     <div class="field" id="field1">
-                        <input type="text" id="title" name="title" value="<%=title%>">
+                        <input type="text" id="title" name="title" >
                     </div>
                     <div class="field">
                     	<input type="text" id="startDate" name="startDate" value="<%=startDate%>">
