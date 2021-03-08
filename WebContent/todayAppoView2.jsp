@@ -13,6 +13,7 @@
 		currDate = formatter.format(systemTime);
 	}
 	if(currPage==null) currPage = "1";
+	String yearMonth = currDate.substring(0, 7);
 %>
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,7 @@
             </h2>
             <div class="ui large form">
                 <div class="ui stacked segment">
-                	<a href="/webShop/monthAppo.jsp"><button class="ui fluid large teal submit button">다른 일정 보기</button></a><br>
+                	<a href="/webShop/monthAppo.jsp?Date=<%=currDate%>"><button class="ui fluid large teal submit button">월별 일정보기</button></a><br>
                     <a href="/webShop/makeAppo.jsp"><button class="ui fluid large teal submit button">일정 등록하기</button></a>
                     <table class="ui celled table" id="tav_table">
                         <thead>
