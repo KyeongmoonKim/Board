@@ -2,9 +2,9 @@ package webShop.Util;
 import java.util.*;
 
 public class MyCalendar {
-	Calendar curr;
-	Calendar prev;
-	Calendar next;
+	public Calendar curr;
+	public Calendar prev;
+	public Calendar next;
 	public MyCalendar() {
 		prev = Calendar.getInstance();
 		curr = Calendar.getInstance();
@@ -38,9 +38,12 @@ public class MyCalendar {
 	private String YM(Calendar cal) {
 		String ret = "";
 		ret = ret + Integer.toString(cal.get(Calendar.YEAR))+ "-";
-		String temp = Integer.toString(cal.get(Calendar.MONTH)+1);
-		if(temp.length()==1) ret = ret + "0"+temp;
+		String temp = Integer.toString(cal.get(Calendar.MONTH)+1)+ "-";
+		if(temp.length()==2) ret = ret + "0"+temp;
 		else ret = ret + temp;
+		String temp2 = Integer.toString(cal.get(Calendar.DATE));
+		if(temp2.length()==1) ret = ret + "0"+temp2;
+		else ret = ret + temp2;
 		return ret;
 	}
 }
