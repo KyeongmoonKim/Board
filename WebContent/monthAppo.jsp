@@ -144,7 +144,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var dataJson = {
-        currMonth : "<%=currDate%>"
+        currMonth : "<%=currDate.substring(0, 7)%>"
 	};
 	function get_Appointment(){	//월별 카운트를 가지고올꺼임.
 		$.ajax({
@@ -153,6 +153,7 @@ $(document).ready(function() {
         	data: dataJson,
         	type: 'post',
         	success: function(ret) { // check if available
+        		alert(ret['size']);
            //success
         		/*$( '#tav_list').empty();
            		for(var i in ret) {
@@ -164,8 +165,8 @@ $(document).ready(function() {
         	  	//$("<td></td>").text(ret[i]['title']).appendTo(tr);
         	  	$("<td></td>").text(ret[i]['userId']).appendTo(tr);
         	  	$("<td></td>").text(ret[i]['startDate']).appendTo(tr);
-        	  	$("<td></td>").text(ret[i]['endDate']).appendTo(tr);*/
-           		}
+        	  	$("<td></td>").text(ret[i]['endDate']).appendTo(tr);
+           		}*/
         	},
          	error: function() { // error logging
            	console.log('Error!');

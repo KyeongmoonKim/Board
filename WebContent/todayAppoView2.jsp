@@ -114,6 +114,7 @@ function get_Appointment(){
            //success
            $( '#tav_list').empty();
            for(var i in ret) {
+        	  //alert(typeof(i)); //스트링임
         	  var tr = $("<tr></tr>").appendTo("#tav_list");
         	  $("<td></td>").text(ret[i]['id']).appendTo(tr);
         	  //var temp1 = $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']);

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.*;
 import webShop.Sevice.*;
+import webShop.Util.*;
 
 /**
  * Servlet implementation class UserController
@@ -186,6 +187,27 @@ public class UserController extends HttpServlet {
 					//out.flush(); 
 				}
 				forwardCase = -1; //no forwarding
+			} else if(action.compareTo("/webShop/user/monthAppoAjax")==0) {
+				String requestData = request.getReader().lines().collect(Collectors.joining());
+				//System.out.println(requestData);
+				String YM = (requestData.split("="))[1];
+				System.out.println(YM);
+				AppointmentDAO Adao = new AppointmentDAO();
+				ArrayList<MyPair> result = Adao.getMonthAppo(YM);
+				String ret = "{ \"size\" : \"" + Integer.toString(result.size())+"\"";
+				for(int i = 0; i < result.size(); i++) {
+					ret = ret + ", \""+ Integer.toString(i)+  "\" : {";
+					ret = ret + "\"key\" : \"" + result.get(i).key + "\", \"value\" : \"" + result.get(i).value +"\""; 
+					ret = ret + "}";
+				}
+				ret = ret + "}";
+				System.out.println(ret);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("utf-8");
+				PrintWriter out = response.getWriter();
+				out.print(ret);
+
+				forwardCase = -1;
 			} else if(action.compareTo("/webShop/user/getIdAppo")==0) { //ajax 통신을 통해서 특정 id에 해당하는 일정 모든 정보 조회
 				String requestData = request.getReader().lines().collect(Collectors.joining());
 				System.out.println(requestData);

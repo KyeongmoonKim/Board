@@ -5,6 +5,7 @@ import java.util.*;
 import javax.naming.*;
 import javax.sql.*;
 import webShop.Sevice.*;
+import webShop.Util.*;
 
 public class AppointmentDAO {
 	private Connection con;
@@ -51,7 +52,32 @@ public class AppointmentDAO {
 		}
 		return AppoList;
 	}
-	
+	public ArrayList<MyPair> getMonthAppo(String YM) {
+		ArrayList<MyPair> ret = new ArrayList<MyPair>();
+		try {
+			//db 연결 및 쿼리 작성
+			con = dataFactory.getConnection();
+			//System.out.println(YM);
+			String q = "SELECT DISTINCT(SUBSTR(STARTDATE, 1, 10)) AS MONTHDATE, COUNT(*) AS CNT FROM MYAPPOINTMENT WHERE STARTDATE LIKE ? AND ISDELETED=0 GROUP BY SUBSTR(STARTDATE, 1, 10)";
+			pstmt = con.prepareStatement(q);
+			pstmt.setString(1, YM+"%");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MyPair temp = new MyPair();
+				temp.key = rs.getString("MONTHDATE");
+				temp.value = Integer.toString(rs.getInt("CNT"));
+				ret.add(temp);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+			catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+		
+	}
 	public AppointmentVO getAppoWithId(String id) { //특정 id의 일정 조회
 		AppointmentVO avo= new AppointmentVO();
 		try {
