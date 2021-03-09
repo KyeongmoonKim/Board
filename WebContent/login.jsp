@@ -4,8 +4,7 @@
 <%	
 	request.setCharacterEncoding("utf-8"); 
 	String isLogin = (String)session.getAttribute("isLogin");
-	System.out.println("isLogin is ");
-	if(isLogin!=null) System.out.println(isLogin);
+	//if(isLogin!=null) System.out.println(isLogin);
 %>
 
 <!-- 로그인 창 -->

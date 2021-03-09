@@ -49,7 +49,6 @@ public class UserController extends HttpServlet {
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8"); //굉장히 중요
 		String action = request.getRequestURI();
-		System.out.println(action);
 		String nextPage = "";
 		int forwardCase = 0;
 		try {
@@ -62,15 +61,12 @@ public class UserController extends HttpServlet {
 			else*/
 			if(action.compareTo("/webShop/user/login")==0) { //로그인 요청
 				String id = request.getParameter("user_id"); //post 방식
-				System.out.println(id);
 				String pwd = request.getParameter("user_pw");
-				System.out.println(pwd);
 				UserVO uvo = new UserVO();
 				uvo.setId(id);
 				uvo.setPwd(pwd);
 				UserDAO udao = new UserDAO();
 				if(udao.logIn(uvo)) {
-					System.out.println("login success!");
 					//session 등록도 해줘야함.
 					session.setAttribute("userId", id);
 					session.setAttribute("isLogin", "true");
@@ -150,11 +146,8 @@ public class UserController extends HttpServlet {
 				for(int i = 0; i < paraNum; i++) Params[i] = (ParamEqus[i].split("="))[1];
 				String date = Params[0];
 				String page = Params[1];
-				//System.out.println(date);
-				//System.out.println(page);
 				AppointmentDAO Adao = new AppointmentDAO();
 				ArrayList<AppointmentVO> AppoList = Adao.dayAppo(date);
-				System.out.println(AppoList.size());
 				String ret = "";
 				if(AppoList.size()!=0) {
 					ret = ret + "{";
@@ -191,7 +184,6 @@ public class UserController extends HttpServlet {
 				String requestData = request.getReader().lines().collect(Collectors.joining());
 				//System.out.println(requestData);
 				String YM = (requestData.split("="))[1];
-				System.out.println(YM);
 				AppointmentDAO Adao = new AppointmentDAO();
 				ArrayList<MyPair> result = Adao.getMonthAppo(YM);
 				String ret = "{ \"size\" : \"" + Integer.toString(result.size())+"\"";
@@ -210,9 +202,7 @@ public class UserController extends HttpServlet {
 				forwardCase = -1;
 			} else if(action.compareTo("/webShop/user/getIdAppo")==0) { //ajax 통신을 통해서 특정 id에 해당하는 일정 모든 정보 조회
 				String requestData = request.getReader().lines().collect(Collectors.joining());
-				System.out.println(requestData);
 				String id = (requestData.split("="))[1];
-				System.out.println(id);
 				AppointmentDAO Adao = new AppointmentDAO();
 				AppointmentVO avo = Adao.getAppoWithId(id);
 				String ret = "";
@@ -245,8 +235,6 @@ public class UserController extends HttpServlet {
 			} else if(action.compareTo("/webShop/user/checkId")==0) { //세션 아이디랑 같은지 아닌지 
 				String boardMakerId = (String)request.getParameter("reqValue");
 				String loginId = (String)session.getAttribute("userId");
-				System.out.println(boardMakerId);
-				System.out.println(loginId);
 				String ret = "";
 				if(boardMakerId.compareTo(loginId)==0) ret = "true";
 				else ret = "false";

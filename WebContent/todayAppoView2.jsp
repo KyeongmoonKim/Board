@@ -6,7 +6,7 @@
 <%
 	request.setCharacterEncoding("utf-8"); 
 	String currDate = request.getParameter("date");
-	System.out.println(currDate);
+	//System.out.println(currDate);
 	String currPage = request.getParameter("page");
 	if(currDate==null) {//없을 땐 현재 날짜.
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
