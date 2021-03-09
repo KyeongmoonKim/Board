@@ -88,24 +88,22 @@
                         	  int cnt = 1;
                         	  int tempDW = -1;
                         	  for(;cnt<=maximumDay;cnt++) {
-                        		  String tempStr = "";
-                        		  if(cnt < 10) tempStr = "0"+Integer.toString(cnt);
-                        		  else tempStr = Integer.toString(cnt);
                         		  (cal.curr).set(Calendar.DATE, cnt);
+                        		  String tempStr = cal.currYM();
                         		  tempDW = (cal.curr).get(Calendar.DAY_OF_WEEK);
                         		  if(tempDW==0) { //<tr>태그넣고 td태그넣어야함
                         	%>
                         	<tr>
-                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 뺀거임. 어차피 <a>태그 달아서 넣어야함 -->
+                        		<td id="date_<%=tempStr%>"><a href="/webShop/todayAppoView2.jsp?date=<%=tempStr%>&page=1"><%=cnt%></a></td>
                         	<%
                         		  } else if(tempDW==7) { //td넣고 </tr>해줘야함
                         	%>
-                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 빠질꺼임. -->
+                        		<td id="date_<%=tempStr%>"><a href="/webShop/todayAppoView2.jsp?date=<%=tempStr%>&page=1"><%=cnt%></a></td>
                         	</tr>
                         	<%
                         		  } else {
                         	%>
-                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 빠질꺼임. -->
+                        		<td id="date_<%=tempStr%>"><a href="/webShop/todayAppoView2.jsp?date=<%=tempStr%>&page=1"><%=cnt%></a></td>
                         	<%
                         		  }
                         	%>
@@ -153,7 +151,15 @@ $(document).ready(function() {
         	data: dataJson,
         	type: 'post',
         	success: function(ret) { // check if available
-        		alert(ret['size']);
+        		var size = Number(ret["size"]);
+        		for(var i = 0; i < size; i++) { //일정에 해당하는 그거 비우고
+        			var jsonKey = String(i);
+        			var DateKey = ret[jsonKey]['key'];
+        			var DateValue = ret[jsonKey]['value'];
+        			var Day = String(Number(DateKey.substring(8, 10)));
+        			$('#date_'+DateKey).empty();
+        			$("<a></a>").attr("href", "/webShop/todayAppoView2.jsp?date="+DateKey+"&page=1").text(Day+"("+DateValue+")").appendTo('#date_'+DateKey);
+        		}
            //success
         		/*$( '#tav_list').empty();
            		for(var i in ret) {
@@ -169,7 +175,7 @@ $(document).ready(function() {
            		}*/
         	},
          	error: function() { // error logging
-           	console.log('Error!');
+           		console.log('Error!');
          	}
        	});
 	}

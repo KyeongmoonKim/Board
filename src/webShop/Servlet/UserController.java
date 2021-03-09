@@ -201,7 +201,7 @@ public class UserController extends HttpServlet {
 					ret = ret + "}";
 				}
 				ret = ret + "}";
-				System.out.println(ret);
+				//System.out.println(ret);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("utf-8");
 				PrintWriter out = response.getWriter();
