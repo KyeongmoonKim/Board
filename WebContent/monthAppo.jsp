@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     import="webShop.Sevice.*, java.util.*, webShop.Util.*" pageEncoding="UTF-8"%>
-<!-- 월 일정 창 -->
+<!-- 월 일정 창  : 이제 폴링으로 월 일정(2021-12%겟지?예를들어) 폴링으로 댕겨오는데
+	 섹터나누기 귀찮으니까 기존 텍스트 깔린거에 추가ㅑ해서 넣자 (ex)12(일정 5개) 그리고 이건 링크로. 그리고 가져올때 db접근할때도 날짜만 가져오자 귀찮으니까. 날짜에서 일일 부분만 꺼내와서 어차피 tr태그에 접근할꺼니까 ㄷ. tr텍스트 가져오고 empty하고 다시 텍스트넣고 ㅇㅇ
+	 아근데 어차피 빈날짜라도 골라서 일정써야하니까 링크는 다걸어줘야하네 . 그럼 그 cnt적는거 없애면됌. 가져올때 아이디에서 골라낼꺼니까
+ -->
 
 <%
 	request.setCharacterEncoding("utf-8");
@@ -93,16 +96,16 @@
                         		  if(tempDW==0) { //<tr>태그넣고 td태그넣어야함
                         	%>
                         	<tr>
-                        		<td id="date_<%=tempStr%>"><%=cnt%></td>
+                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 뺀거임. 어차피 <a>태그 달아서 넣어야함 -->
                         	<%
                         		  } else if(tempDW==7) { //td넣고 </tr>해줘야함
                         	%>
-                        		<td id="date_<%=tempStr%>"><%=cnt%></td>
+                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 빠질꺼임. -->
                         	</tr>
                         	<%
                         		  } else {
                         	%>
-                        		<td id="date_<%=tempStr%>"><%=cnt%></td>
+                        		<td id="date_<%=tempStr%>"></td>   <!-- cnt는 빠질꺼임. -->
                         	<%
                         		  }
                         	%>
@@ -136,5 +139,47 @@
             </div>
         </div>
     </div>
+    
+    <script src="./coco/jquery3.3.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var dataJson = {
+        currMonth : "<%=currDate%>"
+	};
+	function get_Appointment(){	//월별 카운트를 가지고올꺼임.
+		$.ajax({
+        	url: '/webShop/user/monthAppoAjax',
+        	dataType: 'json',
+        	data: dataJson,
+        	type: 'post',
+        	success: function(ret) { // check if available
+           //success
+        		/*$( '#tav_list').empty();
+           		for(var i in ret) {
+        	  	var tr = $("<tr></tr>").appendTo("#tav_list");
+        	  	$("<td></td>").text(ret[i]['id']).appendTo(tr);
+        	  	//var temp1 = $("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']);
+        	 	 //var temp2 = $("<td></td>").appendTo(tr);
+        	  	$("<a></a>").attr("href", "/webShop/windowAppo.jsp?id="+ret[i]['id']).text(ret[i]['title']).appendTo($("<td></td>").appendTo(tr));
+        	  	//$("<td></td>").text(ret[i]['title']).appendTo(tr);
+        	  	$("<td></td>").text(ret[i]['userId']).appendTo(tr);
+        	  	$("<td></td>").text(ret[i]['startDate']).appendTo(tr);
+        	  	$("<td></td>").text(ret[i]['endDate']).appendTo(tr);*/
+           		}
+        	},
+         	error: function() { // error logging
+           	console.log('Error!');
+         	}
+       	});
+	}
+ 	(function() {
+	 	var pollinterval = setInterval(function() {
+		get_Appointment();
+	 	}, 2000);
+	 get_Appointment();
+ 	})(); 
+ 
+ });
+</script>
 </body>
 </html>
