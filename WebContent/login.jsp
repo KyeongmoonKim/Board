@@ -11,6 +11,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<% 
+	if(isLogin!=null&&isLogin.compareTo("true")==0) {
+%>
+<script type="text/javascript">
+	window.location.assign("/webShop/todayAppoView2.jsp");
+</script>
+<%
+	}
+%>
 <meta charset="UTF-8">
 <title>일정</title>
 

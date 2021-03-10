@@ -19,6 +19,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<% 	String isLogin = (String)session.getAttribute("isLogin");
+	if(isLogin==null||isLogin.compareTo("false")==0) {
+%>
+<script type="text/javascript">
+	alert("로그인 하세욧!");
+	window.location.assign("/webShop/login.jsp");
+</script>
+<%
+	}
+%>
 <!-- 여기에 polling부분도 들어가야함 3초마다 한번씩 폴링하게 하자. 폴링은 ajax로 하는게 아니라 그냥 3초마다 form에 현재 날짜 기준으로 그냥 찍어서 보내면 되는거임. usercontroller에 -->
 <meta charset="UTF-8">
 <title>Insert title here</title>

@@ -13,6 +13,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<% 	String isLogin = (String)session.getAttribute("isLogin");
+	if(isLogin==null||isLogin.compareTo("false")==0) {
+%>
+<script type="text/javascript">
+	alert("로그인 하세욧!");
+	window.location.assign("/webShop/login.jsp");
+</script>
+<%
+	}
+%>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="./coco/semantic.min.css">
